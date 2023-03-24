@@ -30,7 +30,9 @@ import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 // 导入 axios 
 import axios from 'axios'
-
+// 导入 vuex 
+import { useStore } from 'vuex';
+const store = useStore()
 const router = useRouter()
 // form 表单的引用对象
 const loginFormRef = ref()
@@ -61,16 +63,15 @@ const submitForm = function () {
         password: loginForm.password
       }).then(
         function (res) {
-          console.log(res.data);
           if (res.data.ok === 1) {
-            localStorage.setItem('token','aaa')
             router.push('/home')
             ElMessage({
               message: '登录成功',
               type: 'success',
               duration : 1000
             })
-            
+          console.log(res.data.data);
+            store.commit('getUserInfo', res.data.data)
           } else {
             ElMessage.error('用户名或密码错误')
           }
@@ -79,9 +80,6 @@ const submitForm = function () {
           console.log(error.message);
         }
       )
-      //  localStorage.setItem('token','yhc')
-      //  router.push('/home')
-
     }
   })
 

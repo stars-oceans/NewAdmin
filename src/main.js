@@ -8,6 +8,8 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 // 引入粒子库
 import Particles from "particles.vue3"
+// 引入axios拦截器
+import '@/util/axios.config'
 
 const app = createApp(App)
 

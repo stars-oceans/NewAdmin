@@ -7,20 +7,19 @@
 <script setup>
 import axios from 'axios'
 import { ref } from 'vue'
+import {useStore} from 'vuex'
 
-
+const store = useStore()
 let  xianshi = ref('aa')
-
-
 let luoli = function(){
-    // axios.get('/users').then(function(req,res){
-    //       console.log(req.data);
-    //       xianshi.value = req.data
-    // },
-    
-    // function(error){
-    //   console.log(error.message);
-    // })
+    axios.get('/adminapi/user/home').then(function(req,res){
+          console.log(req.data);
+          xianshi.value = req.data
+          console.log(store.state.userInfo);
+    },
+    function(error){
+      console.log(error.message);
+    })
 }
   
 </script>

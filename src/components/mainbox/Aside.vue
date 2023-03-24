@@ -6,7 +6,7 @@
       :collapse = "$store.state.isCollapse"
       :default-active = "route.fullPath"
       active-text-color = "#409eff"
-      background-color = "#1e1e1e"
+      background-color = "#252526"
       text-color = "#fff"
       >
       <!-- 普通的侧边栏 -->

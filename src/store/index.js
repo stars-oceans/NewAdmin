@@ -4,7 +4,9 @@ export default createStore({
   state: {
     isRouterFrist :false,
     // 控制侧栏是否折叠
-    isCollapse : false
+    isCollapse : false,
+    // 用户信息
+    userInfo : {}
   },
   getters: {
   },
@@ -15,6 +17,12 @@ export default createStore({
     },
     setIsColapse(state,value){
       state.isCollapse  = value
+    },
+    getUserInfo(state, value){
+      state.userInfo = {
+        ...state.userInfo, ...value
+      }
+      console.log( state );
     }
   },
   actions: {
@@ -23,6 +31,7 @@ export default createStore({
   },
       // 持久化
       plugins:[createPersistedstate({
-        paths : ['isCollapse']
+        // 这里就是 放置持久化的地方
+        paths : ['isCollapse','userInfo']
       })],
 })
