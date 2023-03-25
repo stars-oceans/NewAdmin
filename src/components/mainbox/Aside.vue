@@ -1,5 +1,5 @@
 <template>
-  <el-aside :width="$store.state.isCollapse? '69px':'250px'"  >
+  <el-aside :width="$store.state.isCollapse? '64px':'250px'"  >
     <el-menu 
      :router="true"
      :collapse-transition = "false"
@@ -88,6 +88,6 @@ const route = useRoute()
     }
 
 .el-menu--collapse{
-  width: 70px
+  width: 80px
 }
 </style>

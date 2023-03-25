@@ -10,7 +10,7 @@
       <el-menu-item index="1">档案</el-menu-item>
       <!-- <el-menu-item> -->
         <el-dropdown>
-          <em>欢迎 admin 登录</em>
+          <b>欢迎 {{ username }} 登录</b>
             <el-icon  size="26">
               <Avatar color="white" />
             </el-icon>
@@ -30,12 +30,13 @@
 <script setup>
 import { ArrowDown } from '@element-plus/icons-vue'
 import { ref } from 'vue'
-import store from '../../store'
+import { useStore } from 'vuex'
+
 import { Avatar } from '@element-plus/icons-vue'
 // 导入 router 模块
 import { useRouter } from 'vue-router'
 let router = useRouter()
-
+let store = useStore()
 // 折叠按钮
 let value = ref(!store.state.isCollapse)
 let value1 = ref(store.state.isCollapse)
@@ -43,16 +44,19 @@ let isChange = function () {
   value1.value = !value1.value
   store.commit('setIsColapse', value1.value)
 }
-
 // 退出
 let logOut = function () {
     router.push('/login')
     localStorage.removeItem('token')
+    store.commit('clearUserInfo')
 }
 // 跳转到 center 页面
 let logCenter = function(){
    router.push('/center')
 }
+
+  let username  =  ref(store.state.userInfo.username) 
+  // console.log(username);
 </script>
 
 <style lang="scss" scoped>

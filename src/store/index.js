@@ -22,7 +22,9 @@ export default createStore({
       state.userInfo = {
         ...state.userInfo, ...value
       }
-      console.log( state );
+    },
+    clearUserInfo(state, value){
+      state.userInfo = {}
     }
   },
   actions: {

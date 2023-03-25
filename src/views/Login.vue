@@ -70,7 +70,7 @@ const submitForm = function () {
               type: 'success',
               duration : 1000
             })
-          console.log(res.data.data);
+          // console.log(res.data.data);
             store.commit('getUserInfo', res.data.data)
           } else {
             ElMessage.error('用户名或密码错误')
@@ -86,16 +86,16 @@ const submitForm = function () {
 
 }
 
-
 const particlesInit = async engine => {
   await loadFull(engine);
 };
 
-// particles 的背景配置
+
+  // particles 的背景配置
 const options = {
   background: {
     color: {
-      value: '#0d47a1'
+      value: '#9bd1f8'
     }
   },
   fpsLimit: 120,
@@ -127,52 +127,67 @@ const options = {
       }
     }
   },
-  particles: {
-    color: {
-      value: '#ffffff'
-    },
-    links: {
-      color: '#ffffff',
-      distance: 150,
-      enable: true,
-      opacity: 0.5,
-      width: 1
-    },
-    collisions: {
-      enable: true
-    },
-    move: {
-      direction: 'none',
-      enable: true,
-      outModes: {
-        default: 'bounce'
-      },
-      random: false,
-      speed: 6,
-      straight: false
-    },
+  
+  // 雪天背景
+    particles: {
     number: {
-      density: {
-        enable: true,
-        area: 800
-      },
-      value: 80
+      value: 120, // 颗粒数量
     },
-    opacity: {
-      value: 0.5
+    color: {
+      value: '#fff', // 颗粒颜色
     },
     shape: {
-      type: 'circle'
+      type: 'image', // 颗粒类型：图片
+      image: {
+        src: './img/snow.png', // 图片路径
+        width: 10,
+        height: 10,
+      },
     },
     size: {
-      value: { min: 1, max: 5 },
-    }
+      value: 10, // 颗粒尺寸
+      random: true, // 随机尺寸
+    },
+    line_linked: {
+      enable: false, // 禁用连线
+    },
+    move: {
+      enable: true, // 启用移动
+      speed: 3, // 移动速度
+      direction: 'bottom', // 移动方向：向下
+      straight: false, // 是否是直线移动
+    },
+  },
+  // 下雪背景结束地
+  interactivity: {
+    events: {
+      onhover: {
+        enable: false, // 禁用鼠标悬停事件
+      },
+      onclick: {
+        enable: true, // 启用点击事件
+        mode: 'push', // 模式：新增颗粒
+      },
+      resize: true, // 监听画布尺寸变化
+    },
+    modes: {
+      push: {
+        // 新增模式
+        particles_nb: 5, // 新增数量
+      },
+    },
   },
   detectRetina: true
+
 }
+
+
 
 </script>
 <style scoped>
+  #app{
+    user-select: none;
+  }
   .formBox{
     width: 500px;
     height: 300px;
