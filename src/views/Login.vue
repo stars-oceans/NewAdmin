@@ -40,11 +40,11 @@ const loginFormRef = ref()
 const rules = reactive({
   username: [
     { required: true, message: '请输入用户名', trigger: 'blur' },
-    { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },
+    { min: 2, max: 8, message: '请输入 2 - 8个字符', trigger: 'blur' },
   ],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 3, max: 6, message: 'Length should be 3 to 5', trigger: 'blur' },
+    { min: 2, max: 8, message: '请输入 2 - 8个字符', trigger: 'blur' },
   ]
 })
 // 表单对象 输入的用户名和密码 v-moudle 双向绑定

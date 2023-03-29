@@ -10,7 +10,7 @@
       <el-menu-item index="1">档案</el-menu-item>
       <!-- <el-menu-item> -->
         <el-dropdown>
-          <b>欢迎 {{ username }} 登录</b>
+          <b>欢迎 {{ store.state.userInfo.username }} 登录</b>
             <el-icon  size="26">
               <Avatar color="white" />
             </el-icon>
@@ -55,8 +55,7 @@ let logCenter = function(){
    router.push('/center')
 }
 
-  let username  =  ref(store.state.userInfo.username) 
-  // console.log(username);
+
 </script>
 
 <style lang="scss" scoped>

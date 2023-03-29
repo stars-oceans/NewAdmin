@@ -18,9 +18,12 @@ export default createStore({
     setIsColapse(state,value){
       state.isCollapse  = value
     },
+    // 用户信息
     getUserInfo(state, value){
+      // console.log(value);
       state.userInfo = {
-        ...state.userInfo, ...value
+        ...state.userInfo,
+         ...value
       }
     },
     clearUserInfo(state, value){

@@ -6,7 +6,12 @@
 
 <style lang="scss">
 *{
+    
   margin: 0; padding: 0;
+}
+*::selection {
+    background:#ccc;
+    color:#000;
 }
 /* 设置滚动条的样式 */
 ::-webkit-scrollbar {
