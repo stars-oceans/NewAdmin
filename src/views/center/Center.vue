@@ -10,9 +10,9 @@
     <!-- left 区 -->
     <el-col :span="8">
       <el-card class="box-card userMsg">
-        <el-avatar :src="avatarUrl ? avatarUrl:`https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png`" :size="80" />
+        <el-avatar :src="avatarUrl ? avatarUrl :`https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png`" :size="80" />
         <h3>{{ store.state.userInfo.username }}</h3>
-        <h3>{{ store.state.userInfo.role === 0 ? '普通用户' : '管理员' }}</h3>
+        <h3>{{ store.state.userInfo.role === 0 ? '编辑' : '管理员' }}</h3>
       </el-card>
     </el-col>
 
@@ -44,16 +44,12 @@
           </el-form-item>
           <!-- 上传头像 -->
           <el-form-item label="头像" prop="avatar">
-            <el-upload class="avatar-uploader" :on-change="shangchuan" :show-file-list="false" :auto-upload="false">
-              <img v-if="userForm.avatar" :src="uploadAvatar" class="avatar" />
-              <el-icon v-else class="avatar-uploader-icon">
-                <Plus />
-              </el-icon>
-            </el-upload>
+            <!-- Upload -->
+            <Upload :avatar="userForm.avatar" @fileChange='shangchuan' />
           </el-form-item>
           <!-- 按钮 -->
           <el-form-item>
-            <el-button type="primary" @click="submitForm(userRef)">
+            <el-button type="primary" @click="submitForm">
               更新
             </el-button>
           </el-form-item>
@@ -71,15 +67,22 @@ import { reactive, ref, computed } from 'vue'
 import { ElMessage } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 import { useStore } from 'vuex'
-// let Myurl = 'http://localhost:3000'
+import upload from '@/util/upload'
+// 导入上传组件
+import Upload from '@/components/upload/Upload.vue'
+
 let store = useStore()
 let { username, gender, introduction, avatar, role } = store.state.userInfo
+
+// 显示默认头像或者显示 上传头像的计算属性
 let avatarUrl = computed(() => {
-  return 'http://localhost:3000' + store.state.userInfo.avatar
+  if (store.state.userInfo.avatar) {
+    return 'http://localhost:3000' + store.state.userInfo.avatar
+  } else {
+    false
+  }
 })
-let uploadAvatar = computed(() => {
-  return userForm.avatar.includes('blob') ? userForm.avatar : 'http://localhost:3000' + userForm.avatar
-})
+
 // 表单
 const userRef = ref();
 const userForm = reactive({
@@ -121,14 +124,10 @@ const rules = reactive({
   ],
 })
 // 上传头像：
-const imageUrl = ref('http://localhost:3000')
+// const imageUrl = ref('http://localhost:3000')
 // 上传头像的回调
 let shangchuan = function (file) {
-  // console.log(file);
-  // console.log(file.raw);
-  // console.log(URL.createObjectURL(file.raw));
-  //TODO: 将图片的 file 对象转成 URL 地址
-  // 头像地址
+  // 把file 的对象转换为 URL 地址
   userForm.avatar = URL.createObjectURL(file.raw)
   // 头像的 file 源对象
   userForm.file = file.raw
@@ -136,33 +135,21 @@ let shangchuan = function (file) {
 
 // 确定按钮 
 let submitForm = function () {
-  userRef.value.validate((valid) => {
+  userRef.value.validate(async (valid) => {
     if (valid) {
-      // 因为有文件所以需要 创建一个 FormData() 对象
-      let params = new FormData()
-      // 然后追加进去
-      for (let i in userForm) {
-        params.append(i, userForm[i])
+      // upload 方法 在自己封装的 upload.js里面
+      let data = await upload('/adminapi/user/upload', userForm)
+      if (data.data.ok === 1) {
+        // 提交给 vuex
+        store.commit('getUserInfo', data.data.data)
+        // 提示框
+        ElMessage({
+          showClose: true,
+          message: '更新成功',
+          type: 'success',
+          duration: 1000
+        })
       }
-      axios.post('/adminapi/user/upload', params, {
-        // 配置响应头 因为有文件传输
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      }).then((data) => {
-        console.log(data.data);
-        if (data.data.ok === 1) {
-          // 提交给 vuex
-          store.commit('getUserInfo', data.data.data)
-          // 提示框
-          ElMessage({
-            showClose: true,
-            message: '更新成功',
-            type: 'success',
-            duration: 1000
-          })
-        }
-      })
     }
   })
 }
@@ -181,9 +168,8 @@ let submitForm = function () {
     margin-top: 10px;
   }
 }
-
 // 头像
-::v-deep .avatar-uploader .avatar {
+::v-deep .avatar {
   width: 178px;
   height: 178px;
   display: block;
@@ -191,26 +177,6 @@ let submitForm = function () {
 .avatar {
   width: 178px;
   height: 178px;
-}
-::v-deep .avatar-uploader .el-upload {
-  border: 1px dashed var(--el-border-color);
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: var(--el-transition-duration-fast);
-}
-
-::v-deep .avatar-uploader .el-upload:hover {
-  border-color: var(--el-color-primary);
-}
-
-::v-deep .el-icon.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  text-align: center;
 }
 </style>>
 

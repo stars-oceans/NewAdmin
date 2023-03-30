@@ -9,12 +9,12 @@
   <el-card class="box-card">
     <el-row>
       <el-col :span="4">
-            <el-avatar :src="avatarUrl ? avatarUrl:`https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png`" :size="80"/>
+        <el-avatar :src="avatarUrl ? avatarUrl:`https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png`" :size="80" />
       </el-col>
 
       <el-col :span="20" style=" line-height: 80px; font-weight: 600;">
-         欢迎回来,{{ store.state.userInfo.username }},{{ welcomeText }}
-         </el-col>
+        欢迎回来,{{ store.state.userInfo.username }},{{ welcomeText }}
+      </el-col>
     </el-row>
   </el-card>
 
@@ -32,7 +32,6 @@
     </el-carousel>
   </el-card>
 
-
 </template>
 
 <script setup>
@@ -45,13 +44,17 @@ import { ArrowLeft } from '@element-plus/icons-vue'
 import { UserFilled } from '@element-plus/icons-vue'
 const store = useStore()
 
-let avatarUrl = computed(()=>{
-  return 'http://localhost:3000' + store.state.userInfo.avatar
+let avatarUrl = computed(() => {
+  if (store.state.userInfo.avatar) {
+    return 'http://localhost:3000' + store.state.userInfo.avatar
+  } else {
+    false
+  }
 })
-let welcomeText = computed(()=>{
+let welcomeText = computed(() => {
   let time = new Date()
   let h = time.getHours()
-  return h<12 ? '新的一天要开心!' : '你可能有点累了适当喝杯咖啡休息一下!'
+  return h < 12 ? '新的一天要开心!' : '你可能有点累了适当喝杯咖啡休息一下!'
 })
 
 
