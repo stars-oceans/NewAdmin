@@ -1,5 +1,6 @@
 # admin
-
+## node后端地址：
+> https://github.com/stars-oceans/NewServer
 ## Project setup
 ```
 npm install

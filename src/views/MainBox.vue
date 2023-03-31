@@ -17,6 +17,10 @@ import Aside from '../components/mainbox/Aside.vue'
 
 </script>
 
-<style>
+<style scoped>
+.el-main{
+  overflow: auto;
+  height: calc(100vh - 80px);
+}
 
 </style>

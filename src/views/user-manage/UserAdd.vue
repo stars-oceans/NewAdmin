@@ -5,6 +5,8 @@
       <span class="text-large font-600 mr-3"> 添加用户 </span>
     </template>
   </el-page-header>
+
+  
   <el-row :gutter="20">
     <!-- left 区 -->
     <el-col :span="20">
@@ -32,6 +34,7 @@
             </el-select>
           </el-form-item>
 
+
           <!-- 文本域 -->
           <el-form-item label="文 &nbsp; 本" prop="introduction">
             <el-input v-model="userForm.introduction" rows="2" type="textarea" />
@@ -45,7 +48,7 @@
           <!-- 按钮 -->
           <el-form-item>
             <el-button type="primary" @click="submitForm">
-              添加
+              添加用户
             </el-button>
           </el-form-item>
         </el-form>
@@ -59,6 +62,8 @@
 import { ElMessage } from 'element-plus'
 import { reactive, ref, computed } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 // 导入上传组件
 import Upload from '@/components/upload/Upload.vue'
 // 导入 upload js文件 为服务端发请求
@@ -133,6 +138,8 @@ let submitForm = function () {
           type: 'success',
           duration: 1000
         })
+
+        router.push('/user-manage/userlist')
       } else {
         console.log('Useradd组件提交出错了');
       }
