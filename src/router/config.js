@@ -9,13 +9,16 @@ import NewsList from '@/views/news-manage/NewsList'
  // 导入产品信息的组件
 import ProductAdd from '@/views/product-manage/ProductAdd'
 import ProductList from '@/views/product-manage/ProductList'
+// 404 组件
+import NotFound from '@/views/notfount/NotFount'
+
 
 const routes = [
   // 主页路由
   {
     path : '/home',
     name : 'Home',
-    component : Home
+    component : Home,
   },
   {
     path : '/center',
@@ -26,12 +29,15 @@ const routes = [
   {
     path : '/user-manage/useradd',
     name : 'UserAdd',
-    component : UserAdd
+    component : UserAdd,
+    isAdmin : true
+
   },
   {
     path : '/user-manage/userlist',
     name : 'UserList',
-    component : UserList
+    component : UserList,
+    isAdmin : true
   },
   // 新闻信息的路由配置
   {
@@ -55,7 +61,12 @@ const routes = [
     name : 'ProductList',
     component : ProductList
   },
- 
+   // 404组件
+   {
+    path : "/:pathMatch(.*)*",
+    name : 'Notfound',
+    component : NotFound
+  },
 ]
 
 export default routes

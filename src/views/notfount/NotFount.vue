@@ -1,3 +1,3 @@
 <template>
-  <el-empty description="description" />
+  <el-empty description="走丢了！" />
 </template>

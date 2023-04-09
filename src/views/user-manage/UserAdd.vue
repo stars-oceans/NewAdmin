@@ -39,7 +39,7 @@
           <el-form-item label="文 &nbsp; 本" prop="introduction">
             <el-input v-model="userForm.introduction" rows="2" type="textarea" />
           </el-form-item>
-          <!-- 文本域 -->
+          <!-- 头像 -->
           <el-form-item label="头 &nbsp; 像" prop="avatar">
             <!-- Upload -->
             <Upload :avatar="userForm.avatar" @fileChange='shangchuan' />

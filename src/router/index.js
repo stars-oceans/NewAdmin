@@ -6,7 +6,6 @@ import MainBox from '@/views/MainBox'
 
 // 导入 config.js 里面的 路由规则
 import RoutesConfig from '@/router/config'
-import NotFound from '@/views/notfount/NotFount'
 
 // 导入 Vuex 的 store 文件
 import store from '@/store/index'
@@ -17,12 +16,7 @@ const routes = [
     require: '/login',
     component: Login
   },
-  // 404组件
-  {
-    path : "/:pathMatch(.*)*",
-    name : 'Notfound',
-    component : NotFound
-  },
+
   // 登录组件
   {
     path: '/login',
@@ -49,7 +43,15 @@ const router = createRouter({
 const configRouter = () => {
   // 遍历 导入 config.js 里面的每一项 路由规则
   RoutesConfig.forEach(function (item) {
-    router.addRoute('MainBox', item)
+    // 判断路由是否 携带 isAdmin 
+    if (item.isAdmin) {
+      // 再判断 role 身份是否为管理员
+      if (store.state.userInfo.role ===1) {
+        router.addRoute('MainBox', item)
+      }
+    }else{
+      router.addRoute('MainBox', item)
+    }
   })
   // 自己想写写
   // for(let i=0; i< RoutesConfig.length; i++){
@@ -68,14 +70,16 @@ router.beforeEach((to, from, next) =>{
     // 如果授权(已经登录过了) next()
     // 未授权, 重定向到 login
     if (localStorage.getItem('token')) {
-      configRouter()
-      next()
+        configRouter()
+        next()
     } else {
+      configRouter()
       next({
         path: '/login'
       })
     }
   }
+
 })
 
 store.commit('getRouterFrist', true)

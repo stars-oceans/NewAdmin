@@ -26,7 +26,7 @@
 
       <!-- 折叠侧边栏 -->
       <!-- 用户管理 -->
-      <el-sub-menu index="/uers-manage">
+      <el-sub-menu index="/uers-manage" v-admin>
         <template #title>
           <el-icon>
             <UserFilled />
@@ -45,7 +45,7 @@
           <span>新闻管理</span>
         </template>
         <el-menu-item index="/news-manage/newsadd">创建新闻</el-menu-item>
-        <el-menu-item index="/news-manage/newslist">用户新闻</el-menu-item>
+        <el-menu-item index="/news-manage/newslist">新闻列表</el-menu-item>
       </el-sub-menu>
       <!-- 产品管理 -->
       <el-sub-menu index="/product-manage">
@@ -72,6 +72,17 @@ import store from '../../store'
 
 import { useRoute } from "vue-router"
 const route = useRoute()
+
+
+const vAdmin = {
+  mounted(el) {
+      // console.log(store.state.userInfo.role);
+      if (store.state.userInfo.role !== 1) {
+          el.parentNode.removeChild(el)
+      }
+      
+  },
+}
 </script>
 
 <style  scoped>

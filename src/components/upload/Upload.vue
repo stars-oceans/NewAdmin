@@ -16,13 +16,14 @@ let props = defineProps({
 
 let uploadAvatar = computed(() => {
   return props.avatar.includes('blob') ? props.avatar : 'http://localhost:3000' + props.avatar
+
 })
 
 let emit = defineEmits(['fileChange'])
 // 上传头像的回调
 let shangchuan = function (file) {
+  // console.log('这个传过来的'+props.avatar);
 // console.log(file);
-
   // 自定义方法 给父用
   emit('fileChange', file)
 }
