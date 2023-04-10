@@ -8,8 +8,10 @@
 </template>
 
 <script setup>
-import { defineEmits, defineProps,computed } from 'vue'
+import { defineEmits, defineProps,computed,onMounted} from 'vue'
 import { Plus } from '@element-plus/icons-vue'
+
+
 let props = defineProps({
   avatar : String
 })

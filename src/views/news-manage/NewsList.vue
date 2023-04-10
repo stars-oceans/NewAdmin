@@ -180,6 +180,8 @@ async function handleEdit(index, item) {
   // console.log(data.data.data);
   newsForm.value = data.data.data
   content.value = data.data.data.content
+    console.log(newsForm.value);
+  // console.log(newsForm.value.cover);
 }
 //TODO: 对话框的 确定按钮
 function handleEditComfirm() {
@@ -189,8 +191,7 @@ function handleEditComfirm() {
       // 提交给 vuex
       // 提示框
       // 因为是 ref 的动态数据绑定,所以需要加一个  value
-      // console.log(newsForm.value);
-      const data = await axios.post('/adminapi/news/updataNews', newsForm.value)
+       const data =   await upload('adminapi/news/updataNews',newsForm.value)
       if (data) {
         // 关闭对话框
         dialogVisible.value = false
@@ -211,7 +212,7 @@ function handleEditComfirm() {
 
 // 删除 按钮
 async function handleDelete(value, item) {
-  console.log(item);
+  // console.log(item);
   let data = await axios.get('/adminapi/news/deleteitem', {
     params: {
       id: item._id
@@ -242,7 +243,8 @@ const newsForm = ref({
   category: 2,  // 1最新动态, 2典型案例,3通知公告
   cover: '',
   file: '',
-  isPublish: 0  // 0 未发布, 1 已经发布
+  isPublish: 0,  // 0 未发布, 1 已经发布
+  file:''
 })
 
 // // 1最新动态, 2典型案例,3通知公告的 文字遍历数据
@@ -285,6 +287,7 @@ let shangchuan = (file) => {
   newsForm.value.cover = URL.createObjectURL(file.raw)
   // console.log(newsForm.value.cover);
   newsForm.value.file = file.raw
+  // console.log(newsForm.value.file);
 }
 </script>
 

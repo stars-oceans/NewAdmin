@@ -6,7 +6,7 @@
 
     <!-- formBox 表单 的盒子 -->
     <div class="formBox">
-      <h2>企业门户管理系统</h2>
+      <h2>学生管理系统</h2>
       <el-form label-width="120px" class="demo-ruleForm" status-icon ref="loginFormRef" :model="loginForm" :rules="rules">
         <el-form-item label="用户名" style="color:#000000;" prop="username">
           <el-input v-model="loginForm.username" type="text" autocomplete="off" />

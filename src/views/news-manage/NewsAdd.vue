@@ -45,13 +45,11 @@
               添加新闻
             </el-button>
           </el-form-item>
-
         </el-form>
       </el-card>
     </el-col>
   </el-row>
 </template>
-
 
 <script setup>
 import axios from 'axios'
@@ -125,7 +123,7 @@ let submitForm = function () {
         // 提交给 vuex
         // 提示框
         // 因为是 ref 的动态数据绑定,所以需要加一个  value
-        // console.log(newsForm.value);
+        console.log(newsForm.value.file);
       const res =   await upload('adminapi/news/add',newsForm.value)
       router.push('/news-manage/newslist')
       // console.log(res);

@@ -1,6 +1,8 @@
 <template>
   <div id="myEditor">
-    <div>{{ content }}</div>
+    <template>
+  {{ content }}
+ </template>
   </div>
 </template>
 
