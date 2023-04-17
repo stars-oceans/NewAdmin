@@ -90,6 +90,8 @@
           </template>
         </el-dialog>
 
+
+          
       </el-card>
     </el-col>
   </el-row>
@@ -103,7 +105,7 @@ import { ElMessage } from 'element-plus'
 
 let tableData = ref([])
 // 对话框的初始状态
-let dialogVisible = ref(false)
+
 // 生命周期钩子 onMounted 来发起请求
 onMounted(() => {
   // 钩子里面 当页面渲染时自动查询

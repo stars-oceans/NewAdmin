@@ -48,7 +48,8 @@
           <!-- 操作 -->
           <el-table-column label="操作" width="180">
             <template #default="scope">
-              <el-button type="success" :icon="Star" circle />
+              <el-button type="success" @click="Read(scope.$index, scope.row)" :icon="Star" circle />
+
               <el-button type="primary" @click="handleEdit(scope.$index, scope.row)" :icon="Edit" circle></el-button>
 
               <!-- 删除按钮 -->
@@ -100,6 +101,19 @@
           </template>
         </el-dialog>
 
+        <!-- 预览对话框 -->
+        <el-dialog v-model="dialogVisibleRead" title="预览" width="50%">
+          <h1>标题 {{ newsForm.title }}</h1>
+          <div>时间 {{  formatTime.getTime(newsForm.editTime) }}</div>
+          <!-- 分割线 -->
+          <el-divider>
+            <el-icon><star-filled /></el-icon>
+          </el-divider>
+          <template #footer>
+            <el-button @click="dialogVisibleRead = false" align="center">关闭</el-button>
+          </template>
+        </el-dialog>
+
       </el-card>
     </el-col>
   </el-row>
@@ -117,9 +131,13 @@ import { ElMessage } from 'element-plus'
 import upload from '@/util/upload'
 // 导入上传组件
 import Upload from '@/components/upload/Upload.vue'
+// 分割线引入
+import { StarFilled } from '@element-plus/icons-vue'
 onMounted(() => {
   gettableData()
 })
+// 预览的对话框初始状态
+let dialogVisibleRead = ref(false)
 
 const tableData = ref([])
 
@@ -127,6 +145,20 @@ let gettableData = async function () {
   let data = await axios.get('/adminapi/news/findnews')
   //  console.log(data.data.data);
   tableData.value = data.data.data
+}
+
+// 点击了 预览按钮
+let Read = async function (index, item) {
+  dialogVisibleRead.value = true
+  const data = await axios.get('adminapi/news/finditem', {
+    params: {
+      id: item._id,
+    }
+  })
+  newsForm.value = data.data.data
+  content.value = data.data.data.content
+  // console.log(newsForm.value.editTime);
+
 }
 
 
@@ -169,7 +201,7 @@ let dialogVisible = ref(false)
 
 let content = ref()
 //  新编按钮
-async function handleEdit(index, item) {
+let handleEdit = async function (index, item) {
   // 对话框 显示
   dialogVisible.value = true
   const data = await axios.get('adminapi/news/finditem', {
@@ -180,7 +212,7 @@ async function handleEdit(index, item) {
   // console.log(data.data.data);
   newsForm.value = data.data.data
   content.value = data.data.data.content
-    console.log(newsForm.value);
+  // console.log(newsForm.value);
   // console.log(newsForm.value.cover);
 }
 //TODO: 对话框的 确定按钮
@@ -191,7 +223,7 @@ function handleEditComfirm() {
       // 提交给 vuex
       // 提示框
       // 因为是 ref 的动态数据绑定,所以需要加一个  value
-       const data =   await upload('adminapi/news/updataNews',newsForm.value)
+      const data = await upload('adminapi/news/updataNews', newsForm.value)
       if (data) {
         // 关闭对话框
         dialogVisible.value = false
@@ -244,7 +276,8 @@ const newsForm = ref({
   cover: '',
   file: '',
   isPublish: 0,  // 0 未发布, 1 已经发布
-  file:''
+  file: '',
+  editTime: ''
 })
 
 // // 1最新动态, 2典型案例,3通知公告的 文字遍历数据
