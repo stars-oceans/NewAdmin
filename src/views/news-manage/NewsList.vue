@@ -109,6 +109,8 @@
           <el-divider>
             <el-icon><star-filled /></el-icon>
           </el-divider>
+    内容
+          <div v-html="newsForm.content" class="htmlContent"></div>
           <template #footer>
             <el-button @click="dialogVisibleRead = false" align="center">关闭</el-button>
           </template>
@@ -157,7 +159,8 @@ let Read = async function (index, item) {
   })
   newsForm.value = data.data.data
   content.value = data.data.data.content
-  // console.log(newsForm.value.editTime);
+  // console.log(content.value);
+  // console.log(newsForm.value);
 
 }
 
@@ -329,5 +332,8 @@ let shangchuan = (file) => {
   margin-top: 20px;
 }
 
+ ::v-deep .htmlContent{
+  max-width: 100%;
+}
 
 </style>

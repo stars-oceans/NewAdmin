@@ -90,8 +90,6 @@
           </template>
         </el-dialog>
 
-
-          
       </el-card>
     </el-col>
   </el-row>
@@ -103,6 +101,7 @@ import axios from 'axios'
 import { ref, reactive, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 
+let dialogVisible = ref(false)
 let tableData = ref([])
 // 对话框的初始状态
 

@@ -1,8 +1,7 @@
 <template>
   <div id="myEditor">
-    <template>
-  {{ content }}
- </template>
+    <div v-html="content">
+    </div>
   </div>
 </template>
 
@@ -18,7 +17,7 @@ defineProps({
  const emits = defineEmits(['editorChange'])
 onMounted(()=>{
 const editor = new E('#myEditor')
-// 或者 const editor = new E( document.getElementById('div1') )
+// 或者 const editor = new E( document.getElementById('div1'))
 editor.create()
 
 // 回调函数

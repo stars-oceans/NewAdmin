@@ -26,8 +26,13 @@
     </template>
     <!-- 轮播 -->
     <el-carousel :interval="4000" type="card" height="200px">
-      <el-carousel-item v-for="item in 6" :key="item">
-        <h3 text="2xl" justify="center">{{ item }}</h3>
+      <el-carousel-item v-for="item in loopList" :key="item._id">
+        <div :style=" { backgroundImage:`url(http://localhost:3000${item.cover})`, backgroundSize : 'cover' } " >
+        <h3 text="2xl" justify="center">
+         {{ item.title }}
+        </h3>
+        </div>
+        
       </el-carousel-item>
     </el-carousel>
   </el-card>
@@ -36,7 +41,7 @@
 
 <script setup>
 import axios from 'axios'
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
 // hreder：
 import { ArrowLeft } from '@element-plus/icons-vue'
@@ -57,7 +62,17 @@ let welcomeText = computed(() => {
   return h < 12 ? '新的一天要开心!' : '你可能有点累了适当喝杯咖啡休息一下!'
 })
 
+let loopList = ref()
+onMounted(() => {
+  getloopList()
+})
 
+let getloopList = async function () {
+  let data = await axios.get('/adminapi/Product/findList')
+  //  console.log(data.data.data);
+  loopList.value = data.data.data
+  // console.log(loopList.value);
+}
 </script>
 
 <style scoped>
@@ -81,6 +96,11 @@ let welcomeText = computed(() => {
 
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
+}
+
+.el-carousel-item  h3 img{
+  width: 100%;
+  height: 100%;
 }
 
 </style>
