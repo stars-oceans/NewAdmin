@@ -32,7 +32,6 @@
          {{ item.title }}
         </h3>
         </div>
-        
       </el-carousel-item>
     </el-carousel>
   </el-card>
